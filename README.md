@@ -5,12 +5,12 @@ Bu Projemizde İki Tip Kullanıcı Türünü Alıp(Elit ve Genel Kullanıcı) On
 
 
 ## Projedeki Kazanımlar:
->* Farklı Classların Birbirleri İçinde Kullanımı
->* Dosya Okuma/Yazma İşlemlerinin Öğrenilmesi
->* Kalıtım Kullanarak Classın Üst Ve Alt Elemanlarına Erişimi
->* javax.mail Kütüphanesinin Kullanımının Öğrenimi
->* Mail Gönderme Apileri İle Çalışma
->* ArrayList'lerin Kullanımı
+>- Farklı Classların Birbirleri İçinde Kullanımı
+>- Dosya Okuma/Yazma İşlemlerinin Öğrenilmesi
+>- Kalıtım Kullanarak Classın Üst Ve Alt Elemanlarına Erişimi
+>- javax.mail Kütüphanesinin Kullanımının Öğrenimi
+>- Mail Gönderme Apileri İle Çalışma
+>- ArrayList'lerin Kullanımı
 ## Dosya Yapısı
 
 The workspace contains two folders by default, where:
@@ -22,4 +22,4 @@ The workspace contains two folders by default, where:
 
 ## UML Diyagramı
 
-img
+[img](https://github.com/AhmetOytun/Vize/blob/master/UML%20Diyagramı.png?raw=true)
