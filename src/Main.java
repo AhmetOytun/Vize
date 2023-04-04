@@ -1,3 +1,4 @@
+//Github Linki="https://github.com/AhmetOytun/Vize".
 //Gerekli Kütüphaneleri Import Ediyoruz.
 import java.util.Scanner;
 import java.util.stream.Stream;
