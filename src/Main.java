@@ -23,8 +23,8 @@ public class Main{
         ElitÜye e=new ElitÜye();
         GenelÜye g=new GenelÜye();
         MailYolla m=new MailYolla();
-        d.GeçiciDosyaOku();
-        d.GeçiciBirleştir();
+        d.GeciciDosyaOku();
+        d.GeciciBirleştir();
         //Dosya İşlemlerinden Dosya Oluştur Methodunu Çağırıyoruz.
         d.DosyaOluştur();
         //Değişkenlerimizi Tanımlıyoruz
@@ -191,8 +191,9 @@ class DosyaIslemleri {
         br2.close();//BufferedReader'ı Kapatıyoruz.
         pw.close();//PrintWriter'ı Kapatıyoruz.
     }
-    void GeçiciDosyaOku()throws IOException{
-        FileWriter d1=new FileWriter("Elit.txt");//Elit Üyeler İçin txt Dosyası Oluşturuluyor.
+    void GeciciDosyaOku()throws IOException{//ÖNEMLİ!!! Başında Gecici Olan Metodlar Sadece PROGRAM ÇALIŞMADAN ÖNCE Kullanıcılar.txt Dosyası Doluysa Çalışır! 
+        //Bu Metodların Olmasının Sebebi Program Çalışamdan Önce .txt Dosyasında Bulunan Kişilere De Mail Yollanmasının Sağlanması!
+        FileWriter d1=new FileWriter("Elit.txt");//Elit Üyeler Dosyasının Üzerine Önceden Eklenen Elit Üyeleri Ekleyeceğiz(Önceden=Program Çalışmadan Önce Veya Bir Önceki Çalışmasında).
         d1.write("#ELİTÜYELER#\n");
         d1.close();//Dosya Kapatılıyor.
 
@@ -200,36 +201,36 @@ class DosyaIslemleri {
         d2.write("#GENELÜYELER#\n");
         d2.close();//Dosya Kapatılıyor.
 
-        FileWriter d3=new FileWriter("GeçiciElit.txt");//Kullanıcılar.txt Dosyası Önceden Doluysa Onları Kaydedeceğimiz Yeri Oluşturuyoruz.
-        FileWriter d4=new FileWriter("GeçiciGenel.txt");//Kullanıcılar.txt Dosyası Önceden Doluysa Onları Kaydedeceğimiz Yeri Oluşturuyoruz.
+        FileWriter d3=new FileWriter("GeciciElit.txt");//Kullanıcılar.txt Dosyası Önceden Doluysa Onları Kaydedeceğimiz Yeri Oluşturuyoruz.
+        FileWriter d4=new FileWriter("GeciciGenel.txt");//Kullanıcılar.txt Dosyası Önceden Doluysa Onları Kaydedeceğimiz Yeri Oluşturuyoruz.
         
-        PrintWriter pw1=new PrintWriter("GeçiciElit.txt");//Kullanıcılar.txt Dosyasının Üzerine Yazacağız.
-        PrintWriter pw2=new PrintWriter("GeçiciGenel.txt");//Kullanıcılar.txt Dosyasının Üzerine Yazacağız.
+        PrintWriter pw1=new PrintWriter("GeciciElit.txt");//Kullanıcılar.txt Dosyasının Üzerine Yazacağız.
+        PrintWriter pw2=new PrintWriter("GeciciGenel.txt");//Kullanıcılar.txt Dosyasının Üzerine Yazacağız.
 
-        BufferedReader br1=new BufferedReader(new FileReader("Kullanıcılar.txt"));//İlk Önce Elit.txt Dosyasından Okumaya Başlıyoruz.
+        BufferedReader br1=new BufferedReader(new FileReader("Kullanıcılar.txt"));//Kullanıcılar .txt Dosyasını Okuyoruz Eğer Önceden Bir Giriş Yapılmadıysa İşlem Yapmıyoruz.
         String line=br1.readLine();//Satırları "line" İsimli Bir Stringe Adıyoruz.
         if(line==null){//Kullanıcılar.txt Dosyası Önceden Dolu Değilse Hiçbir İşlem Yapma!
-            pw1.flush();
+            pw1.flush();//Streami Boşaltıyoruz.
             pw2.flush();//Streami Boşaltıyoruz.
             br1.close();//BufferedReader'ı Kapatıyoruz.
             pw1.close();//PrintWriter'ı Kapatıyoruz.
             pw2.close();//PrintWriter'ı Kapatıyoruz.
-            d1.close();
-            d2.close();
-            d3.close();
-            d4.close();
+            d1.close();//Yazıcıları Kapatalım.
+            d2.close();//Yazıcıları Kapatalım.
+            d3.close();//Yazıcıları Kapatalım.
+            d4.close();//Yazıcıları Kapatalım.
             return;
         }
-            if(line.contains("ELİT")){
+            if(line.contains("ELİT")){//Başlıkları Ayırt Etmek İçin Kullandığım Bir Fonksiyon.
                 line=br1.readLine();
-                while(line.contains("GENEL")==false){
+                while(line.contains("GENEL")==false){//Aynı Şekilde Genel Yazısına Gelene Kadar Devam Ediyor.
                     pw1.println(line);
                     line=br1.readLine();
                 }
             }
-            if(line.contains("GENEL")){
+            if(line.contains("GENEL")){//Başlıkları Ayırt Etmek İçin Kullandığım Bir Fonksiyon.
                 line=br1.readLine();
-                while(line!=null){
+                while(line!=null){//Aynı Şekilde null Olana Kadar Kadar Devam Ediyor.
                     pw2.println(line);
                     line=br1.readLine();
                 }
@@ -240,27 +241,26 @@ class DosyaIslemleri {
         br1.close();//BufferedReader'ı Kapatıyoruz.
         pw1.close();//PrintWriter'ı Kapatıyoruz.
         pw2.close();//PrintWriter'ı Kapatıyoruz.
-        d1.close();
-        d2.close();
-        d3.close();
-        d4.close();
+        d1.close();//Yazıcıları Kapatıyoruz.
+        d2.close();//Yazıcıları Kapatıyoruz.
+        d3.close();//Yazıcıları Kapatıyoruz.
+        d4.close();//Yazıcıları Kapatıyoruz.
     }
-    void GeçiciBirleştir()throws IOException{
-        FileWriter DosyaYaz1=new FileWriter("Elit.txt",true);
-        FileWriter DosyaYaz2=new FileWriter("Genel.txt",true);
+    void GeciciBirleştir()throws IOException{//Gecici Metodlarının Neden Var Olduklarını Üstteki Yorum Satırında Anlatmıştım, Aynısı Burada da Geçerli.
+        FileWriter DosyaYaz1=new FileWriter("Elit.txt",true);//Asıl Elit Dosyamızın Üzerine Eski Kullanıcıları Ekleyeceğiz.
+        FileWriter DosyaYaz2=new FileWriter("Genel.txt",true);//Asıl Genel Dosyamızın Üzerine Eski Kullanıcıları Ekleyeceğiz.
 
-
-        BufferedReader br1=new BufferedReader(new FileReader("GeçiciElit.txt"));//İlk Önce Elit.txt Dosyasından Okumaya Başlıyoruz.
+        BufferedReader br1=new BufferedReader(new FileReader("GeciciElit.txt"));//İlk Önce GeciciElit.txt Dosyasından Okumaya Başlıyoruz.
         String line=br1.readLine();//Satırları "line" İsimli Bir Stringe Adıyoruz.
 
-        while(line!=null){//Dosyadaki Boş Olmayan Bütün Satırları Tarayıp Kullanıcılar.txt Dosyasına Yazıyoruz.
+        while(line!=null){//Dosyadaki Boş Olmayan Bütün Satırları Tarayıp Elit.txt Dosyasına Yazıyoruz(Neden Diye Sorarsanız Kişi Ekledikten Sonra Hepsini Kullanıcılar.txt Dosyasında Tutacağız).
             DosyaYaz1.write(line+"\n");
             line=br1.readLine();
         }
-        BufferedReader br2=new BufferedReader(new FileReader("GeçiciGenel.txt"));//Genel.txt Dosyasını Okumaya Başlıyoruz.
+        BufferedReader br2=new BufferedReader(new FileReader("GeciciGenel.txt"));//GeciciGenel.txt Dosyasını Okumaya Başlıyoruz.
         line=br2.readLine();
 
-        while(line!=null){//Dosyadaki Boş Olmayan Bütün Satırları Tarayıp Kullanıcılar.txt Dosyasına Yazıyoruz.
+        while(line!=null){//Dosyadaki Boş Olmayan Bütün Satırları Tarayıp Genel.txt Dosyasına Yazıyoruz(Neden Diye Sorarsanız Kişi Ekledikten Sonra Hepsini Kullanıcılar.txt Dosyasında Tutacağız).
             DosyaYaz2.write(line+"\n");
             line=br2.readLine();
         }
@@ -271,38 +271,38 @@ class DosyaIslemleri {
 
     }
     List<String> ÖncekiGenelMailleriBirleştir()throws IOException{
-        List<String> GeçiciGenelMailleri = new ArrayList<>();
+        List<String> GeciciGenelMailleri = new ArrayList<>();//Eski Mailleri Dosya Üzerinden Okuyup Programa Dahil Edeceğiz!
         // E-Mail Patternını Oluşturuyoruz Ki .txt Dosyasından Mail Adreslerini Alabilelim.
         Pattern pat=Pattern.compile( "[a-zA-Z0-9]" + "[a-zA-Z0-9_.]" + "*@[a-zA-Z0-9]" + "+([.][a-zA-Z]+)+"); 
-        BufferedReader Okuyucu = new BufferedReader(new FileReader("Genel.txt")); 
-        //reading myInputFile.txt file 
+        BufferedReader Okuyucu = new BufferedReader(new FileReader("Genel.txt")); //Genel.txt Dosyasını Okumaya Başlıyoruz.
+        
         String line = Okuyucu.readLine(); 
         while (line != null) { 
         Matcher mat = pat.matcher(line); 
         while (mat.find()) { 
-        GeçiciGenelMailleri.add(mat.group());
+        GeciciGenelMailleri.add(mat.group());
         } 
         line = Okuyucu.readLine(); 
         } 
         Okuyucu.close();
-        return GeçiciGenelMailleri;
+        return GeciciGenelMailleri;//Mail Adreslerini Birleştirmek Üzere Return Ediyoruz.
     }
     List<String> ÖncekiElitMailleriBirleştir()throws IOException{
-        List<String> GeçiciElitMailleri = new ArrayList<>();
-        // Regular expression for email id 
+        List<String> GeciciElitMailleri = new ArrayList<>();//Eski Mailleri Dosya Üzerinden Okuyup Programa Dahil Edeceğiz!
+        // E-Mail Patternını Oluşturuyoruz Ki .txt Dosyasından Mail Adreslerini Alabilelim.
         Pattern pat=Pattern.compile( "[a-zA-Z0-9]" + "[a-zA-Z0-9_.]" + "*@[a-zA-Z0-9]" + "+([.][a-zA-Z]+)+"); 
-        BufferedReader Okuyucu = new BufferedReader(new FileReader("Elit.txt")); 
-        //reading myInputFile.txt file 
+        BufferedReader Okuyucu = new BufferedReader(new FileReader("Elit.txt")); //Elit.txt Dosyasını Okumaya Başlıyoruz.
+
         String line = Okuyucu.readLine(); 
         while (line != null) { 
         Matcher mat = pat.matcher(line); 
         while (mat.find()) { 
-        GeçiciElitMailleri.add(mat.group());
+        GeciciElitMailleri.add(mat.group());
         } 
         line = Okuyucu.readLine(); 
         } 
         Okuyucu.close();
-        return GeçiciElitMailleri;
+        return GeciciElitMailleri;//Mail Adreslerini Birleştirmek Üzere Return Ediyoruz.
     }
 }
 class ElitÜye extends DosyaIslemleri{
