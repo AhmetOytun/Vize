@@ -22,4 +22,4 @@ The workspace contains two folders by default, where:
 
 ## UML Diyagramı
 
-![img](https://github.com/AhmetOytun/Vize/blob/master/UML%20Diyagramı.png?raw=true)
+![img](https://raw.githubusercontent.com/AhmetOytun/Vize/master/UML%20Diyagramı.png?token=GHSAT0AAAAAACA72XLCCSJDEWWWWY6YZEOOZBNJH2Q)
