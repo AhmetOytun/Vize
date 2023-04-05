@@ -1,6 +1,8 @@
 //Github Linki="https://github.com/AhmetOytun/Vize".
 //Gerekli Kütüphaneleri Import Ediyoruz.
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.io.IOException;
 import java.util.List;
@@ -21,6 +23,8 @@ public class Main{
         ElitÜye e=new ElitÜye();
         GenelÜye g=new GenelÜye();
         MailYolla m=new MailYolla();
+        d.GeçiciDosyaOku();
+        d.GeçiciBirleştir();
         //Dosya İşlemlerinden Dosya Oluştur Methodunu Çağırıyoruz.
         d.DosyaOluştur();
         //Değişkenlerimizi Tanımlıyoruz
@@ -74,8 +78,8 @@ public class Main{
                         Başlik=s.nextLine();
                         System.out.println("Mail Içerigi:");
                         İçerik=s.nextLine();
-                        for (int i=0;i<ElitMailleri.size();i++){//for Döngüsü Sayesinde Listedeki Bütün Mail Adreslerini Tarıyoruz.
-                            m.MailDetay(Başlik, İçerik, ElitMailleri.get(i));//Taradığımız Mail Adreslerini Mail Yollama Fonksiyonuna Yolluyoruz.
+                        for (int i=0;i<d.ÖncekiElitMailleriBirleştir().size();i++){//for Döngüsü Sayesinde Listedeki Bütün Mail Adreslerini Tarıyoruz.
+                            m.MailDetay(Başlik, İçerik, d.ÖncekiElitMailleriBirleştir().get(i));//Taradığımız Mail Adreslerini Mail Yollama Fonksiyonuna Yolluyoruz.
                             System.out.println(i+1+".Mail Basariyla Gonderildi!");
                         }
                         continue;
@@ -85,14 +89,14 @@ public class Main{
                         Başlik=s.nextLine();
                         System.out.println("Mail Içerigi:");
                         İçerik=s.nextLine();
-                        for (int i=0;i<GenelMailleri.size();i++){//for Döngüsü Sayesinde Listedeki Bütün Mail Adreslerini Tarıyoruz.
-                            m.MailDetay(Başlik, İçerik, GenelMailleri.get(i));//Taradığımız Mail Adreslerini Mail Yollama Fonksiyonuna Yolluyoruz.
+                        for (int i=0;i<d.ÖncekiGenelMailleriBirleştir().size();i++){//for Döngüsü Sayesinde Listedeki Bütün Mail Adreslerini Tarıyoruz.
+                            m.MailDetay(Başlik, İçerik, d.ÖncekiGenelMailleriBirleştir().get(i));//Taradığımız Mail Adreslerini Mail Yollama Fonksiyonuna Yolluyoruz.
                             System.out.println(i+1+".Mail Basariyla Gonderildi!");
                         }
-                        continue;
+                    continue;
                     case 3:
                         //Bütün Mailleri Tutacak Olan Bütün Mailler Listesini Oluşturup Diğer İki Liste İle Birleştiriyoruz.
-                        List<String> BütünMailler = Stream.concat(GenelMailleri.stream(), ElitMailleri.stream()).toList();
+                        List<String> BütünMailler = Stream.concat(d.ÖncekiElitMailleriBirleştir().stream(), d.ÖncekiGenelMailleriBirleştir().stream()).toList();
 
                         System.out.println("Mail Basligi:");
                         s.nextLine();
@@ -161,16 +165,8 @@ void MailDetay(String Baslik,String İçerik,String MailAdresi){//Mail Yollayaca
 class DosyaIslemleri {
     void DosyaOluştur() throws IOException{
 
-        FileWriter d1=new FileWriter("Elit.txt");//Elit Üyeler İçin txt Dosyası Oluşturuluyor.
-        d1.write("#ELİTÜYELER#\n");
+        FileWriter d1=new FileWriter("Kullanıcılar.txt");//ÖNEMLİ!! Vize Projesinde İstenilen Kullanıcılar.txt Dosyası Oluşturuluyor. 
         d1.close();//Dosya Kapatılıyor.
-
-        FileWriter d2=new FileWriter("Genel.txt");//Genel Üyeler İçin txt Dosyası Oluşturuluyor.
-        d2.write("#GENELÜYELER#\n");
-        d2.close();//Dosya Kapatılıyor.
-
-        FileWriter d3=new FileWriter("Kullanıcılar.txt");//ÖNEMLİ!! Vize Projesinde İstenilen Kullanıcılar.txt Dosyası Oluşturuluyor. 
-        d3.close();//Dosya Kapatılıyor.
     }
     void DosyaBirleştir()throws IOException{//ÖNEMLİ!! Kullanıcılar.txt Dosyasının İçeriği İstenilen Formata Getirilsin Diye Diğer 2 Dosyalar İle Birleştirilmesi Sağlanıyor.
 
@@ -194,6 +190,119 @@ class DosyaIslemleri {
         br1.close();//BufferedReader'ı Kapatıyoruz.
         br2.close();//BufferedReader'ı Kapatıyoruz.
         pw.close();//PrintWriter'ı Kapatıyoruz.
+    }
+    void GeçiciDosyaOku()throws IOException{
+        FileWriter d1=new FileWriter("Elit.txt");//Elit Üyeler İçin txt Dosyası Oluşturuluyor.
+        d1.write("#ELİTÜYELER#\n");
+        d1.close();//Dosya Kapatılıyor.
+
+        FileWriter d2=new FileWriter("Genel.txt");//Genel Üyeler İçin txt Dosyası Oluşturuluyor.
+        d2.write("#GENELÜYELER#\n");
+        d2.close();//Dosya Kapatılıyor.
+
+        FileWriter d3=new FileWriter("GeçiciElit.txt");//Kullanıcılar.txt Dosyası Önceden Doluysa Onları Kaydedeceğimiz Yeri Oluşturuyoruz.
+        FileWriter d4=new FileWriter("GeçiciGenel.txt");//Kullanıcılar.txt Dosyası Önceden Doluysa Onları Kaydedeceğimiz Yeri Oluşturuyoruz.
+        
+        PrintWriter pw1=new PrintWriter("GeçiciElit.txt");//Kullanıcılar.txt Dosyasının Üzerine Yazacağız.
+        PrintWriter pw2=new PrintWriter("GeçiciGenel.txt");//Kullanıcılar.txt Dosyasının Üzerine Yazacağız.
+
+        BufferedReader br1=new BufferedReader(new FileReader("Kullanıcılar.txt"));//İlk Önce Elit.txt Dosyasından Okumaya Başlıyoruz.
+        String line=br1.readLine();//Satırları "line" İsimli Bir Stringe Adıyoruz.
+        if(line==null){//Kullanıcılar.txt Dosyası Önceden Dolu Değilse Hiçbir İşlem Yapma!
+            pw1.flush();
+            pw2.flush();//Streami Boşaltıyoruz.
+            br1.close();//BufferedReader'ı Kapatıyoruz.
+            pw1.close();//PrintWriter'ı Kapatıyoruz.
+            pw2.close();//PrintWriter'ı Kapatıyoruz.
+            d1.close();
+            d2.close();
+            d3.close();
+            d4.close();
+            return;
+        }
+            if(line.contains("ELİT")){
+                line=br1.readLine();
+                while(line.contains("GENEL")==false){
+                    pw1.println(line);
+                    line=br1.readLine();
+                }
+            }
+            if(line.contains("GENEL")){
+                line=br1.readLine();
+                while(line!=null){
+                    pw2.println(line);
+                    line=br1.readLine();
+                }
+            }
+        
+        pw1.flush();//Streami Boşaltıyoruz.
+        pw2.flush();//Streami Boşaltıyoruz.
+        br1.close();//BufferedReader'ı Kapatıyoruz.
+        pw1.close();//PrintWriter'ı Kapatıyoruz.
+        pw2.close();//PrintWriter'ı Kapatıyoruz.
+        d1.close();
+        d2.close();
+        d3.close();
+        d4.close();
+    }
+    void GeçiciBirleştir()throws IOException{
+        FileWriter DosyaYaz1=new FileWriter("Elit.txt",true);
+        FileWriter DosyaYaz2=new FileWriter("Genel.txt",true);
+
+
+        BufferedReader br1=new BufferedReader(new FileReader("GeçiciElit.txt"));//İlk Önce Elit.txt Dosyasından Okumaya Başlıyoruz.
+        String line=br1.readLine();//Satırları "line" İsimli Bir Stringe Adıyoruz.
+
+        while(line!=null){//Dosyadaki Boş Olmayan Bütün Satırları Tarayıp Kullanıcılar.txt Dosyasına Yazıyoruz.
+            DosyaYaz1.write(line+"\n");
+            line=br1.readLine();
+        }
+        BufferedReader br2=new BufferedReader(new FileReader("GeçiciGenel.txt"));//Genel.txt Dosyasını Okumaya Başlıyoruz.
+        line=br2.readLine();
+
+        while(line!=null){//Dosyadaki Boş Olmayan Bütün Satırları Tarayıp Kullanıcılar.txt Dosyasına Yazıyoruz.
+            DosyaYaz2.write(line+"\n");
+            line=br2.readLine();
+        }
+        br1.close();//BufferedReader'ı Kapatıyoruz.
+        br2.close();//BufferedReader'ı Kapatıyoruz.
+        DosyaYaz1.close();//PrintWriter'ı Kapatıyoruz.
+        DosyaYaz2.close();//PrintWriter'ı Kapatıyoruz.
+
+    }
+    List<String> ÖncekiGenelMailleriBirleştir()throws IOException{
+        List<String> GeçiciGenelMailleri = new ArrayList<>();
+        // E-Mail Patternını Oluşturuyoruz Ki .txt Dosyasından Mail Adreslerini Alabilelim.
+        Pattern pat=Pattern.compile( "[a-zA-Z0-9]" + "[a-zA-Z0-9_.]" + "*@[a-zA-Z0-9]" + "+([.][a-zA-Z]+)+"); 
+        BufferedReader Okuyucu = new BufferedReader(new FileReader("Genel.txt")); 
+        //reading myInputFile.txt file 
+        String line = Okuyucu.readLine(); 
+        while (line != null) { 
+        Matcher mat = pat.matcher(line); 
+        while (mat.find()) { 
+        GeçiciGenelMailleri.add(mat.group());
+        } 
+        line = Okuyucu.readLine(); 
+        } 
+        Okuyucu.close();
+        return GeçiciGenelMailleri;
+    }
+    List<String> ÖncekiElitMailleriBirleştir()throws IOException{
+        List<String> GeçiciElitMailleri = new ArrayList<>();
+        // Regular expression for email id 
+        Pattern pat=Pattern.compile( "[a-zA-Z0-9]" + "[a-zA-Z0-9_.]" + "*@[a-zA-Z0-9]" + "+([.][a-zA-Z]+)+"); 
+        BufferedReader Okuyucu = new BufferedReader(new FileReader("Elit.txt")); 
+        //reading myInputFile.txt file 
+        String line = Okuyucu.readLine(); 
+        while (line != null) { 
+        Matcher mat = pat.matcher(line); 
+        while (mat.find()) { 
+        GeçiciElitMailleri.add(mat.group());
+        } 
+        line = Okuyucu.readLine(); 
+        } 
+        Okuyucu.close();
+        return GeçiciElitMailleri;
     }
 }
 class ElitÜye extends DosyaIslemleri{

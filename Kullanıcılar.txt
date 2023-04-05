@@ -1,6 +1,8 @@
 #ELİTÜYELER#
-Ahmet Oytun	Kurtuldu	ahmetoytunkurtuldu@gmail.com
-Saul	Goodman	saulgoodman@gmail.com
+Serpil Üstebay serpil@deneme.edu.tr
+Ahmet Oytun Kurtuldu ahmetoytunkurtuldu@gmail.com
+Saul Goodman SaulGoodman@gmail.com
 #GENELÜYELER#
-Ahmet Oytun	Kurtuldu	ahmetoytunkurtuldu@gmail.com
-Kim	Wexler	kimwexler@gmail.com
+Serpil Üstebay serpil@deneme.edu.tr
+Ahmet Oytun Kurtuldu ahmetoytunkurtuldu@gmail.com
+Kim Wexler SaulGoodman@gmail.com
