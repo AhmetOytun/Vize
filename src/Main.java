@@ -125,6 +125,7 @@ public class Main{
             }
         }
         s.close();//Scanner'ı Kapatıyoruz.
+        d.GeciciDosyaSil();//Geçici Dosyaları Siliyoruz.
     }
 }
 class MailYolla{
@@ -269,6 +270,16 @@ class DosyaIslemleri {
         DosyaYaz1.close();//PrintWriter'ı Kapatıyoruz.
         DosyaYaz2.close();//PrintWriter'ı Kapatıyoruz.
 
+    }
+    void GeciciDosyaSil(){//Geçici Dosyaları Silme Metodu
+        File f1= new File("GeciciElit.txt");
+        File f2= new File("GeciciGenel.txt");
+        File f3= new File("Elit.txt");
+        File f4= new File("Genel.txt");
+        f1.delete();
+        f2.delete();
+        f3.delete();
+        f4.delete();
     }
     List<String> ÖncekiGenelMailleriBirleştir()throws IOException{
         List<String> GeciciGenelMailleri = new ArrayList<>();//Eski Mailleri Dosya Üzerinden Okuyup Programa Dahil Edeceğiz!
