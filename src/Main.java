@@ -132,8 +132,8 @@ public class Main{
 class MailYolla{
 void MailDetay(String Baslik,String İçerik,String MailAdresi){//Mail Yollayacak Metodumuzu Oluşturuyoruz.
     //Kullanıcıdan Mail Bilgilerini Alıyoruz.
-    final String kullaniciadi = "ahmetoytunkurtuldu@gmail.com";
-    final String uygulamaşifresi = "hcmyxgmgamccmjrl";//ÖNEMLİ!!! ŞİFRE OLARAK HESABIN ŞİFRESİNİ DEĞİL UYGULAMA ŞİFRESİNİ GİRİYORUZ!(Gmail İçin:[https://support.google.com/mail/answer/185833?hl=tr]).
+    final String kullaniciadi = "GMAIL ADRESİNİ BURAYA YAZIN";
+    final String uygulamaşifresi = "GMAIL UYGULAMA ŞİFRESİNİ BURAYA YAZIN";//ÖNEMLİ!!! ŞİFRE OLARAK HESABIN ŞİFRESİNİ DEĞİL UYGULAMA ŞİFRESİNİ GİRİYORUZ!(Gmail İçin:[https://support.google.com/mail/answer/185833?hl=tr]).
 
     Properties bilgiler = new Properties();
     bilgiler.put("mail.smtp.auth", "true");
